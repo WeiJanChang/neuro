@@ -1,0 +1,1 @@
+%let output_path = /home/u63831316/neuro/output;
