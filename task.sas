@@ -80,3 +80,10 @@ quit;
 proc print data=neuro.test1;
 run;
 
+
+/* combine test and test1 dataset */
+data neuro.structure_test;
+    set neuro.test1 neuro.test;
+run;
+
+
