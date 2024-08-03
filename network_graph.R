@@ -19,11 +19,11 @@ V(net) #unique vertex name (id 和parent_id unique value)
 #label the vertex
 
 # OPTION1: set id as label
-V(net)$label <- V(net)$name
+# V(net)$label <- V(net)$name
 
 # OPTION2: set acronym as label
-#name_mapping <- setNames(data$acronym, data$id)
-#V(net)$label <- name_mapping[V(net)$name]
+name_mapping <- setNames(data$acronym, data$id)
+V(net)$label <- name_mapping[V(net)$name]
 
 #add the weight. Degree represents the number of connections to a node
 V(net)$degree <- degree(net) 
@@ -71,6 +71,7 @@ edges <- as_data_frame(net) # igraph 裡的語法
 # what = :  whether to return info about vertices, edges, or both. The default is ‘edges’.
 
 # Create the visNetwork plot
+# 缺點：太慢 太難一次看清楚整個view, 為何不用visTREE
 visNetwork(nodes, edges) %>%
   visNodes(size = 15) %>%
   visEdges(arrows = "to") %>% #從小孩到媽媽 所以用to
