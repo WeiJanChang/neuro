@@ -2,48 +2,55 @@ install.packages("jsonlite") # do the converting
 install.packages("tidyverse") # clean up data
 
 library(jsonlite)
-library(tidyverse)
-library(readr)
-
-df <- fromJSON("~/Python/neuro/test_files/structures.json")
-parent <- df$structure_id_path[[i]]
-child <- df$structure_id_path[[i]][i-1]
-
-df_1 <- unnest(df, structure_id_path)
-
-
-# Load necessary libraries
-library(jsonlite)
 library(dplyr)
 
 
-# Function to extract list from character string
+df <- fromJSON("~/Python/neuro/test_files/structures.json")
+
+# To extract IDs from the structure_id_path col.
 extract_ids <- function(path) {
   as.numeric(unlist(strsplit(gsub("c\\(|\\)", "", path), ",")))
 }
 
-# Create a list of parent-child relationships
-relationships <- do.call(rbind, lapply(df$structure_id_path, function(path) {
-  ids <- extract_ids(path)
+# Create a dataframe to store id and parent-child relationships
+relationships <- data.frame(id = numeric(), parent = numeric(), child = numeric())
+
+# Loop through each row of the dataframe to create id-parent-child relationships
+for (i in 1:nrow(df)) {
+  # Extract the IDs from the structure_id_path
+  ids <- extract_ids(df$structure_id_path[i])
+  
+  # Extract the current id and its parent
+  current_id <- ids[length(ids)]
+  parent_id <- ifelse(length(ids) > 1, ids[length(ids) - 1], NA)
+  
+  # Add to relationships
+  relationships <- rbind(relationships, data.frame(id = current_id, parent = parent_id, child = current_id))
+  
+  # Generate parent-child relationships for each path
   if (length(ids) > 1) {
-    # Create parent-child pairs
-    parent_child <- data.frame(parent = ids[-length(ids)], child = ids[-1])
-  } else {
-    parent_child <- data.frame(parent = NA, child = ids)
+    parent_child <- data.frame(id = current_id, parent = ids[-length(ids)], child = ids[-1])
+    relationships <- rbind(relationships, parent_child)
   }
-  return(parent_child)
-}))
+}
 
 # Remove duplicate relationships
 relationships <- unique(relationships)
 
-# Merge with data to get names
-relationships_with_names <- merge(
-  relationships, df[, c("id", "name")], by.x = "parent", by.y = "id", all.x = TRUE, suffixes = c("_parent", "_child")
-)
-relationships_with_names <- merge(
-  relationships_with_names, df[, c("id", "name")], by.x = "child", by.y = "id", all.x = TRUE, suffixes = c("_parent", "_child")
-)
+# Group children by id
+tree_jsn <- relationships %>%
+  group_by(id) %>%
+  summarize(
+    parent_structure_id = first(parent),
+    children = paste(unique(child[child != id]), collapse = ", ")
+  )
 
-# Display the results
-view(relationships_with_names)
+# Merge with the original data frame to include 'id', 'parent_structure_id', and 'children'
+final_treejsn <- df %>%
+  select(id, structure_id_path) %>%
+  left_join(tree_jsn, by = "id") %>%
+  select(id, parent_structure_id, children)
+
+view(final_treejsn)
+
+tree_json <- as.data.frame(final_treejsn)
