@@ -51,6 +51,4 @@ final_treejsn <- df %>%
   left_join(tree_jsn, by = "id") %>%
   select(id, parent_structure_id, children)
 
-view(final_treejsn)
-
 tree_json <- as.data.frame(final_treejsn)

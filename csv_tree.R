@@ -31,5 +31,4 @@ result <- df %>%
 result <- result %>%
   select(id, parent_structure_id, children)
 
-view(result)
 tree_csv <- as.data.frame(result)
