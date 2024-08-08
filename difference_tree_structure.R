@@ -18,46 +18,23 @@ only_in_csv_parentid <- setdiff(tree_csv$parent_structure_id, tree_json$parent_s
 only_in_csv_childid <- setdiff(tree_csv$children, tree_json$children)
 
 
+# show the difference in df
+tree_json1 <- tree_json %>%
+  mutate(children = str_split(children, ", ") %>% lapply(as.numeric)) # 將children 裡的, 去掉並設為numeric 回傳list in children col 
+# lapply 會回傳list 
+# mutate(): 用mutate 可以修改or 添加row 
 
-compare_dataframes <- function(df1, df2) {
-  # Find unique IDs in each dataframe
-  unique_to_df1 <- setdiff(df1$id, df2$id)
-  unique_to_df2 <- setdiff(df2$id, df1$id)
-  
-  # Find common IDs and compare their details
-  common_ids <- intersect(df1$id, df2$id)
-  
-  # Create a list to store differences
-  differences <- list(
-    unique_to_df1 = df1 %>% filter(id %in% unique_to_df1),
-    unique_to_df2 = df2 %>% filter(id %in% unique_to_df2),
-    differences_in_common_ids = lapply(common_ids, function(id) {
-      df1_row <- df1 %>% filter(id == id)
-      df2_row <- df2 %>% filter(id == id)
-      if (!identical(df1_row, df2_row)) {
-        list(
-          id = id,
-          df1_details = df1_row,
-          df2_details = df2_row
-        )
-      } else {
-        NULL
-      }
-    }) %>% Filter(Negate(is.null), .)
-  )
-  
-  return(differences)
-}
+tree_csv1 <- tree_csv %>%
+  mutate(children = str_split(children, ", ") %>% lapply(as.numeric))
 
-# Run comparison
-differences <- compare_dataframes(tree_csv, tree_json)
-view(differences)
-# Display differences
-print("Unique to DataFrame 1:")
-print(differences$unique_to_df1)
+# join 兩個df: tree_json1 join tree_csv1 based on id, 然後若沒匹配就輸入NA
+merged_df <- full_join(tree_json1, tree_csv1, by = "id", suffix = c("_tree_json1", "_tree_csv1"))
 
-print("Unique to DataFrame 2:")
-print(differences$unique_to_df2)
 
-print("Differences in common IDs:")
-print(differences$differences_in_common_ids)
+# differences bewteen parent_structure_id column and children column
+differences_basedonid <- merged_df %>%
+  filter(parent_structure_id_tree_json1 != parent_structure_id_tree_csv1 |
+           !mapply(setequal, children_tree_json1, children_tree_csv1)) %>%
+  mutate(different_parent = parent_structure_id_tree_json1 != parent_structure_id_tree_csv1,
+         different_children = !mapply(setequal, children_tree_json1, children_tree_csv1))
+view(differences_basedonid)
