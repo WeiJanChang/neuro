@@ -27,7 +27,8 @@ tree_json1 <- tree_json %>%
 tree_csv1 <- tree_csv %>%
   mutate(children = str_split(children, ", ") %>% lapply(as.numeric))
 
-# join 兩個df: tree_json1 join tree_csv1 based on id, 然後若沒匹配就輸入NA
+# join 兩個df: tree_json1 join tree_csv1 based on id(會保留兩個df 所有id), 然後若沒匹配就輸入NA
+
 merged_df <- full_join(tree_json1, tree_csv1, by = "id", suffix = c("_tree_json1", "_tree_csv1"))
 
 
