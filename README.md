@@ -16,7 +16,7 @@ This project utilises data from @ytsimon2004
 - Clone this repository to your local machine
 
 ## How to use
-### #todo
+### #todo 
 
 ## Visualisation
-![Example of Network visualisation](./figures/example_network_graph.png)
+![Example of Network visualisation](/figures/example_network_graph.png)
