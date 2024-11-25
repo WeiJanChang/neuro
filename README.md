@@ -4,7 +4,7 @@ This project is designed to compare the tree structures from two datasets and vi
 The datasets are in CSV and JSON formats, and the functions in this project will determine whether the tree structures from these formats are the same or not, and provide visualization for the structures.
 
 ## Data Sources 
-This project utilises data from @ytsimon2004
+This project utilises data from [@ytsimon2004](https://github.com/ytsimon2004)
 
 ## Features
 - Compare tree structures from structure_tree_safe_2017.csv and structures.json in test_files.
