@@ -1,7 +1,7 @@
 /* find out if there is any difference of two tree strcutures from 
 two dataset `structure_tree_safe_2017.csv` & `structures.json` */
  
-/* 指定parent_id 來找id哪些符合並找到parent */
+/* Specify the parent_id to find matching IDs and locate the parent */
 proc sql;
     create table neuro.test as
     select id, parent_structure_id, name,acronym
@@ -58,12 +58,12 @@ proc sql;
     where 1=0;  /* where 1=0 是false, 所以會為一個empty table*/
 quit;
 
-/* 依序尋找parentid insert to test1裡 */
+/* Sequentially search for parent_id and insert into test1 */
 %macro loop_parent_ids;
     %let n = %sysfunc(countw(&parentid)); 
-    /* sysfunc裡有countw來算paretid 裡面有多少值，然後給variable "n" */
+    /* Use countw in sysfunc to calculate how many values are in parentid and assign it to the variable ‘n’ */
     %do i = 1 %to &n;
-    /* 當i = 1, n 就是第一個數值182305689.. 以此類推  */
+    /* When i = 1, n is the first value 182305689… and so on. */
         %let id = %scan(&parentid, &i);
         /*  %scan(string, n, delimiters:空格by default)        */
         proc sql;
