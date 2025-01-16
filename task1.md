@@ -1,6 +1,6 @@
 # Task 1
 
-- 1.1 Find out if there is any difference of two tree strcutures from two dataset `structure_tree_safe_2017.csv` & `structures.json`
+- 1.1 Find out if there is any difference of two tree structures from two dataset `structure_tree_safe_2017.csv` & `structures.json`
 
   - There have different tree in both JSON and CSV files.
   - So, to create a function which input will be either JSON or CSV to determine whether two data type is the same.
