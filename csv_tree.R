@@ -1,9 +1,8 @@
-# assertequal dataframe??
 library(dplyr)
 library(jsonlite)
 
 # Read the CSV file
-df <- read.csv("/Users/wei/Python/neuro/test_files/structure_tree_safe_2017.csv")
+df <- read.csv("[PATH_TO_CSV_FILE]/structure_tree_safe_2017.csv")
 
 result <- df %>%
   group_by(parent_structure_id) %>%
@@ -13,12 +12,7 @@ result <- df %>%
 
 tree_csv <- as.data.frame(result)
 
-library(dplyr)
-
-# Read the CSV file
-df <- read.csv("/Users/wei/Python/neuro/test_files/structure_tree_safe_2017.csv")
-
-# Group by 'parent_structure_id' and concatenate 'id' values
+# Group by 'parent_structure_id' and concat 'id' values
 children_df <- df %>%
   group_by(parent_structure_id) %>%
   summarise(children = paste(sort(id), collapse = ", "))
