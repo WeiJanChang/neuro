@@ -5,7 +5,7 @@ library(jsonlite)
 library(dplyr)
 
 
-df <- fromJSON("~/Python/neuro/test_files/structures.json")
+df <- fromJSON("[PATH_TO_JSON_FILE]/structures.json")
 
 # To extract IDs from the structure_id_path col.
 extract_ids <- function(path) {
