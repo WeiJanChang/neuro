@@ -1,10 +1,10 @@
-# install.packages("igraph", type="binary")
-# install.packages("visNetwork")
+install.packages("igraph", type="binary")
+install.packages("visNetwork")
 library(igraph)
 library(visNetwork)
 
 # STEP 1: read data
-data <- read.csv("/Users/wei/Python/neuro/test_files/structure_tree_safe_2017.csv")
+data <- read.csv("[PATH_TO_FILE]/structure_tree_safe_2017.csv")
 
 # STEP 2: extract two columns of data and creat a df
 id_parentid<- data.frame(data$id, data$parent_structure_id, data$acronym)
