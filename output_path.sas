@@ -1,1 +1,1 @@
-%let output_path = /home/u63831316/neuro/output;
+%let output_path = /PATH/TO/neuro/output;

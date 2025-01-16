@@ -1,1 +1,3 @@
-libname neuro "/home/u63831316/neuro";
+%let libname_path = /PATH/TO/YOUR/neuro;
+
+libname neuro "&libname_path";
