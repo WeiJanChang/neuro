@@ -47,3 +47,8 @@ from these formats are the same or not, and provide visualization for the struct
 ![Example of the first 200 degree](/figures/example_thefirst200.png)
 - Example of the interactive network plots via visNetwork
 ![Example of Network visualisation](/figures/example_network_graph.png)
+
+# Contact
+
+[Wei Jan, Chang](mailto:weijan.chang@gmail.com)
+
