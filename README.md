@@ -22,20 +22,28 @@ from these formats are the same or not, and provide visualization for the struct
 ### in SAS
 
 ---
-Step I. import test files in SAS OnDemand for Academics
 
-Step II. Create a SAS library: ``libname.sas``
+- import test files in SAS OnDemand for Academics
 
-Step III. Using Macros variable to create file paths: ``output_path.sas``, ``test_file_path.sas``
+- Create a SAS library: ``libname.sas``
 
-Step IV. To import the CSV and JSON files into a SAS dataset: ``csv_to_sas.sas``, ``structure_json.sas``
+- Using Macros variable to create file paths: ``output_path.sas``, ``test_file_path.sas``
 
-Step V. Processing the structure on the CSV file ``process_structure_csv.sas``
+- To import the CSV and JSON files into a SAS dataset: ``csv_to_sas.sas``, ``structure_json.sas``
+
+- Processing the structure on the CSV file ``process_structure_csv.sas``
 
 ### in R
 
 ---
 
+- Present the parent-child relationships in df called 'tree_csv' in ``csv_tree.R``
+- Present the parent-child relationships in df called 'tree_json' in ``josnfile.R``
+- Find differences between tree_csv and tree_json in ``difference_tree_structure.R``
+
 ## Visualisation
 
+- Example of the first 200 degree
+![Example of the first 200 degree](/figures/example_thefirst200.png)
+- Example of the interactive network plots via visNetwork
 ![Example of Network visualisation](/figures/example_network_graph.png)
